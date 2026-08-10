@@ -52,7 +52,7 @@ function Navbar() {
   return (
     <header className={"site-header " + (scrolled ? "site-header--scrolled" : "")}>
       <a className="brand" href="#home" aria-label="EVILBEAR.JPG — início" data-cursor="link">
-        EVILBEAR<span>.JPG</span>
+        <img src="/evilbear-logo.webp" width="1800" height="370" alt="" aria-hidden="true" />
       </a>
       <nav className="desktop-nav" aria-label="Navegação principal">
         <a href="#home" data-cursor="link">Home</a>
@@ -107,7 +107,7 @@ function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
       >
-        <img src="/og.png" width="1536" height="1024" fetchPriority="high" alt="Mascote urso cromado vermelho da EVILBEAR.JPG" />
+        <img src="/mascot.png" width="1536" height="1024" fetchPriority="high" alt="Mascote urso cromado vermelho da EVILBEAR.JPG" />
         <div className="hero-art__fade" />
       </motion.div>
       <div className="hero-content">
@@ -120,22 +120,16 @@ function Hero() {
           Independent creative identity <span>Brazil — Worldwide</span>
         </motion.p>
         <h1 className="hero-title" aria-label="EVILBEAR.JPG">
-          <motion.span
-            className="hero-title__evil"
-            initial={reduceMotion ? false : { opacity: 0, y: 90 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
-            EVIL
-          </motion.span>
-          <motion.span
-            className="hero-title__bear chrome-text"
-            initial={reduceMotion ? false : { opacity: 0, y: 110 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.95, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            BEAR<span>.JPG</span>
-          </motion.span>
+          <motion.img
+            className="hero-logo"
+            src="/evilbear-logo.webp"
+            width="1800"
+            height="370"
+            alt="EVILBEAR.JPG"
+            initial={reduceMotion ? false : { opacity: 0, y: 80, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.95, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+          />
         </h1>
         <motion.div
           className="hero-bottom"
@@ -180,7 +174,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
     >
       <a href="#contact" aria-label={"Ver projeto " + project.name}>
         <div className="project__visual">
-          <img src="/og.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
+          <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
           <span className="project__number">{project.number}</span>
           <span className="project__mark">EB</span>
           <div className="project__noise" />
@@ -221,7 +215,7 @@ function Services() {
       <div className="services-intro">
         <Reveal><p className="section-kicker">02 / Capabilities</p><h2>What I do</h2></Reveal>
         <Reveal className="services-preview" delay={0.1}>
-          <img src="/og.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
+          <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
           <span>0{active + 1}</span>
         </Reveal>
       </div>
@@ -257,7 +251,7 @@ function About() {
         <Reveal><p className="section-kicker">03 / Behind the identity</p><h2>About<br /><span>Evilbear</span></h2></Reveal>
       </div>
       <Reveal className="about-portrait" delay={0.05}>
-        <img src="/og.png" width="1536" height="1024" loading="lazy" alt="Retrato artístico do mascote EVILBEAR.JPG" />
+        <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="Retrato artístico do mascote EVILBEAR.JPG" />
         <span>Est. in the shadows</span>
       </Reveal>
       <Reveal className="about-copy" delay={0.12}>
@@ -326,7 +320,9 @@ function Contact() {
 function Footer() {
   return (
     <footer className="footer section-shell">
-      <a className="footer-brand" href="#home" data-cursor="link">EVILBEAR<span>.JPG</span></a>
+      <a className="footer-brand" href="#home" data-cursor="link" aria-label="Voltar ao início">
+        <img src="/evilbear-logo.webp" width="1800" height="370" alt="EVILBEAR.JPG" />
+      </a>
       <div className="footer-bottom">
         <p>Beatmaker / Designer / Illustrator / Video editor</p>
         <div>

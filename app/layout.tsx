@@ -17,15 +17,15 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "EVILBEAR.JPG — Sound, Visual & Identity",
       description: "Creating sounds & visuals. Building worlds from Brazil to everywhere.",
       type: "website",
-      images: [{ url: origin + "/og.png", width: 1536, height: 1024, alt: "EVILBEAR.JPG" }],
+      images: [{ url: origin + "/og.jpg", width: 1536, height: 1024, alt: "EVILBEAR.JPG" }],
     },
     twitter: {
       card: "summary_large_image",
       title: "EVILBEAR.JPG — Sound, Visual & Identity",
       description: "Creating sounds & visuals. Building worlds.",
-      images: [origin + "/og.png"],
+      images: [origin + "/og.jpg"],
     },
-    icons: { icon: "/og.png", shortcut: "/og.png" },
+    icons: { icon: "/mascot.png", shortcut: "/mascot.png" },
   };
 }
 
