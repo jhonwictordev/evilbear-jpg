@@ -107,7 +107,7 @@ function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
       >
-        <img src="/mascot.png" width="1536" height="1024" fetchPriority="high" alt="Mascote urso cromado vermelho da EVILBEAR.JPG" />
+        <img src="/site-image.webp" width="1672" height="941" fetchPriority="high" alt="Urso vermelho da EVILBEAR.JPG produzindo música em um estúdio iluminado por neon" />
         <div className="hero-art__fade" />
       </motion.div>
       <div className="hero-content">
@@ -174,7 +174,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
     >
       <a href="#contact" aria-label={"Ver projeto " + project.name}>
         <div className="project__visual">
-          <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
+          <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="" aria-hidden="true" />
           <span className="project__number">{project.number}</span>
           <span className="project__mark">EB</span>
           <div className="project__noise" />
@@ -215,7 +215,7 @@ function Services() {
       <div className="services-intro">
         <Reveal><p className="section-kicker">02 / Capabilities</p><h2>What I do</h2></Reveal>
         <Reveal className="services-preview" delay={0.1}>
-          <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="" aria-hidden="true" />
+          <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="" aria-hidden="true" />
           <span>0{active + 1}</span>
         </Reveal>
       </div>
@@ -251,7 +251,7 @@ function About() {
         <Reveal><p className="section-kicker">03 / Behind the identity</p><h2>About<br /><span>Evilbear</span></h2></Reveal>
       </div>
       <Reveal className="about-portrait" delay={0.05}>
-        <img src="/mascot.png" width="1536" height="1024" loading="lazy" alt="Retrato artístico do mascote EVILBEAR.JPG" />
+        <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="Urso vermelho da EVILBEAR.JPG no estúdio de produção musical" />
         <span>Est. in the shadows</span>
       </Reveal>
       <Reveal className="about-copy" delay={0.12}>

@@ -178,7 +178,7 @@ img { display: block; max-width: 100%; }
   height: 100%;
   overflow: hidden;
 }
-.hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 64% center; filter: contrast(1.08) saturate(0.9); }
+.hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: contrast(1.08) saturate(0.92); }
 .hero-art__fade {
   position: absolute;
   inset: 0;
@@ -325,10 +325,10 @@ img { display: block; max-width: 100%; }
   transform: scale(1.01);
   transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), filter 600ms ease;
 }
-.project--ritual img { object-position: 58% center; }
-.project--form img { object-position: 83% center; filter: grayscale(0.65) contrast(1.32) brightness(0.68); }
-.project--signal img { object-position: 35% center; filter: saturate(1.35) contrast(1.18) brightness(0.62); transform: scale(1.18) rotate(-2deg); }
-.project--midnight img { object-position: center; filter: grayscale(0.85) sepia(0.2) contrast(1.35) brightness(0.57); }
+.project--ritual img { object-position: 37% center; }
+.project--form img { object-position: 72% center; filter: grayscale(0.65) contrast(1.32) brightness(0.68); }
+.project--signal img { object-position: 86% center; filter: saturate(1.35) contrast(1.18) brightness(0.62); transform: scale(1.18) rotate(-2deg); }
+.project--midnight img { object-position: 53% center; filter: grayscale(0.85) sepia(0.2) contrast(1.35) brightness(0.57); }
 .project:hover .project__visual { border-color: rgba(255, 26, 26, 0.4); box-shadow: 0 0 36px rgba(208, 0, 0, 0.11); }
 .project:hover .project__visual img { transform: scale(1.055); filter: contrast(1.1) brightness(0.72); }
 .project:hover .project__visual::after { opacity: 1; }
@@ -365,7 +365,7 @@ img { display: block; max-width: 100%; }
 }
 .services-preview { position: relative; height: 180px; overflow: hidden; border: 1px solid rgba(255, 26, 26, 0.18); }
 .services-preview::after { position: absolute; inset: 0; background: linear-gradient(140deg, rgba(5, 5, 5, 0.1), rgba(5, 5, 5, 0.8)); content: ""; }
-.services-preview img { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; filter: saturate(0.8) contrast(1.3); }
+.services-preview img { width: 100%; height: 100%; object-fit: cover; object-position: 68% center; filter: saturate(0.8) contrast(1.3); }
 .services-preview span { position: absolute; z-index: 1; right: 14px; bottom: 6px; color: rgba(255, 255, 255, 0.72); font-size: 3rem; font-weight: 300; }
 .service {
   display: grid;
@@ -392,7 +392,7 @@ img { display: block; max-width: 100%; }
 .about-title { align-self: start; padding-top: 30px; }
 .about-portrait { position: relative; height: 580px; overflow: hidden; border: 1px solid rgba(255, 26, 26, 0.16); }
 .about-portrait::after { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, #050505); content: ""; }
-.about-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 75% center; filter: grayscale(0.35) brightness(0.72) contrast(1.25); }
+.about-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 36% center; filter: grayscale(0.35) brightness(0.72) contrast(1.25); }
 .about-portrait span {
   position: absolute;
   z-index: 1;
@@ -577,7 +577,7 @@ img { display: block; max-width: 100%; }
   .menu-button { right: 18px; }
   .hero { align-items: flex-end; min-height: 920px; padding-top: 105px; padding-bottom: 78px; }
   .hero-art { top: 58px; right: calc(50% - 50vw); width: 100vw; height: 61%; opacity: 0.82 !important; }
-  .hero-art img { object-position: 68% center; }
+  .hero-art img { object-position: 40% center; }
   .hero-art__fade {
     background:
       linear-gradient(0deg, #050505 4%, transparent 50%),

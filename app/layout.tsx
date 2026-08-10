@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "EVILBEAR.JPG — Sound, Visual & Identity",
       description: "Creating sounds & visuals. Building worlds from Brazil to everywhere.",
       type: "website",
-      images: [{ url: origin + "/og.jpg", width: 1536, height: 1024, alt: "EVILBEAR.JPG" }],
+      images: [{ url: origin + "/og.jpg", width: 1672, height: 941, alt: "EVILBEAR.JPG — estúdio de produção musical" }],
     },
     twitter: {
       card: "summary_large_image",

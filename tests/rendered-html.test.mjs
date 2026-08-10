@@ -37,11 +37,14 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   ]);
 
   assert.match(page, /CustomCursor/);
+  assert.match(page, /site-image\.webp/);
   assert.match(page, /aria-label="Navegação principal"/);
   assert.match(page, /useReducedMotion/);
   assert.match(layout, /EVILBEAR\.JPG — Sound, Visual & Identity/);
   assert.match(layout, /og\.jpg/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
-  await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", root)));
+  await access(new URL("public/site-image.webp", root));
+  await access(new URL("public/og.jpg", root));
+  await assert.rejects(access(new URL("app/_sites-preview/SkeletonPreview.tsx", root)));
 });
