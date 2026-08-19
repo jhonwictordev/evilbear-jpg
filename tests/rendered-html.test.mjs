@@ -43,6 +43,8 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   assert.match(layout, /EVILBEAR\.JPG — Sound, Visual & Identity/);
   assert.match(layout, /og\.jpg/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /Pirata\+One/);
+  assert.doesNotMatch(css, /UnifrakturCook/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("public/site-image.webp", root));
   await access(new URL("public/og.jpg", root));
