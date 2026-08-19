@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=UnifrakturCook:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pirata+One&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -282,11 +282,11 @@ img { display: block; max-width: 100%; }
 .section-heading { display: grid; grid-template-columns: 1fr 320px; align-items: end; gap: 50px; margin-bottom: 80px; }
 .section-heading h2, .about h2, .contact h2 {
   margin: 0;
-  font-family: "UnifrakturCook", Georgia, serif;
+  font-family: "Pirata One", Georgia, serif;
   font-size: clamp(5.4rem, 10vw, 10rem);
   font-weight: 700;
   line-height: 0.64;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
 }
 .section-heading h2 span, .about h2 span { color: #696464; }
@@ -338,7 +338,7 @@ img { display: block; max-width: 100%; }
   right: 22px;
   bottom: 10px;
   color: rgba(255, 255, 255, 0.08);
-  font-family: "UnifrakturCook", serif;
+  font-family: "Pirata One", Georgia, serif;
   font-size: clamp(5rem, 9vw, 9rem);
   line-height: 1;
 }
@@ -357,7 +357,7 @@ img { display: block; max-width: 100%; }
 .services-intro { display: grid; grid-template-columns: 1fr 280px; align-items: start; gap: 60px; margin-bottom: 64px; }
 .services h2 {
   margin: 0;
-  font-family: "UnifrakturCook", Georgia, serif;
+  font-family: "Pirata One", Georgia, serif;
   font-size: clamp(5rem, 9vw, 9rem);
   line-height: 0.8;
   letter-spacing: -0.05em;
@@ -441,7 +441,7 @@ img { display: block; max-width: 100%; }
 .manifesto h2 {
   max-width: 1200px;
   margin: 0;
-  font-family: "UnifrakturCook", Georgia, serif;
+  font-family: "Pirata One", Georgia, serif;
   font-size: clamp(5.4rem, 12vw, 12rem);
   line-height: 0.72;
   letter-spacing: -0.05em;
