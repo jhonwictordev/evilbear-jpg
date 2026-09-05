@@ -38,6 +38,8 @@ test("keeps the finished portfolio metadata and accessibility features", async (
 
   assert.match(page, /CustomCursor/);
   assert.match(page, /site-image\.webp/);
+  assert.match(page, /youtube\.com\/results\?search_query=EVILBEAR\.JPG\+beats/);
+  assert.match(page, /Listen to the beats/);
   assert.match(page, /aria-label="Navegação principal"/);
   assert.match(page, /useReducedMotion/);
   assert.match(layout, /EVILBEAR\.JPG — Sound, Visual & Identity/);

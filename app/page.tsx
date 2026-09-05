@@ -198,7 +198,22 @@ function Work() {
         </Reveal>
         <Reveal className="section-heading__aside" delay={0.1}>
           <p>Sound and image built with intention. A selection of identities, covers, illustrations and moving worlds.</p>
-          <span>2025 — 2026</span>
+          <a
+            className="youtube-beats"
+            href="https://www.youtube.com/results?search_query=EVILBEAR.JPG+beats"
+            target="_blank"
+            rel="noreferrer"
+            data-cursor="link"
+            aria-label="Listen to EVILBEAR.JPG beats on YouTube (opens in a new tab)"
+          >
+            <span className="youtube-beats__play" aria-hidden="true">▶</span>
+            <span className="youtube-beats__copy">
+              <small>Listen to the beats</small>
+              <strong>YouTube</strong>
+            </span>
+            <Arrow />
+          </a>
+          <span className="section-years">2025 — 2026</span>
         </Reveal>
       </div>
       <div className="project-grid">
