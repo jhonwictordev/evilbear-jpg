@@ -292,24 +292,25 @@ img { display: block; max-width: 100%; }
 .section-heading h2 span, .about h2 span { color: #696464; }
 .section-heading__aside { padding-bottom: 8px; }
 .section-heading__aside p { margin: 0 0 24px; color: #969090; font-size: 0.9rem; line-height: 1.7; }
-.youtube-beats {
+.work-links { display: grid; gap: 10px; }
+.work-link {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 18px;
-  min-height: 108px;
-  padding: 20px;
+  min-height: 94px;
+  padding: 16px 18px;
   border: 1px solid rgba(255, 26, 26, 0.5);
   background: linear-gradient(105deg, rgba(208, 0, 0, 0.16), rgba(5, 5, 5, 0.35));
   transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
-.youtube-beats:hover, .youtube-beats:focus-visible {
+.work-link:hover, .work-link:focus-visible {
   border-color: var(--red-hot);
   background: linear-gradient(105deg, rgba(208, 0, 0, 0.28), rgba(5, 5, 5, 0.42));
   box-shadow: 0 0 32px rgba(208, 0, 0, 0.16);
   transform: translateY(-3px);
 }
-.youtube-beats__play {
+.work-link__icon {
   display: grid;
   place-items: center;
   width: 46px;
@@ -320,10 +321,12 @@ img { display: block; max-width: 100%; }
   font-size: 0.8rem;
   letter-spacing: 0;
 }
-.youtube-beats__copy { display: grid; gap: 2px; letter-spacing: 0; }
-.youtube-beats__copy small { color: #999; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
-.youtube-beats__copy strong { color: var(--white); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; }
-.youtube-beats > span:last-child { color: var(--red-hot); font-size: 1.1rem; letter-spacing: 0; }
+.work-link--instagram { border-color: rgba(255, 255, 255, 0.14); background: rgba(5, 5, 5, 0.5); }
+.work-link--instagram .work-link__icon { color: var(--red-hot); background: transparent; }
+.work-link__copy { display: grid; gap: 2px; letter-spacing: 0; }
+.work-link__copy small { color: #999; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+.work-link__copy strong { color: var(--white); font-size: 1.18rem; font-weight: 500; letter-spacing: -0.02em; }
+.work-link > span:last-child { color: var(--red-hot); font-size: 1.1rem; letter-spacing: 0; }
 .section-heading__aside .section-years { display: block; margin-top: 18px; color: #4d4848; font-size: 0.62rem; letter-spacing: 0.2em; }
 .project-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 72px 20px; }
 .project { position: relative; }
@@ -626,7 +629,7 @@ img { display: block; max-width: 100%; }
   .work, .services, .about, .contact { padding-top: 100px; padding-bottom: 100px; }
   .section-heading { grid-template-columns: 1fr; margin-bottom: 55px; }
   .section-heading__aside { max-width: 520px; }
-  .youtube-beats { min-height: 96px; }
+  .work-link { min-height: 88px; }
   .section-heading h2, .about h2, .contact h2 { font-size: clamp(4.5rem, 22vw, 7rem); }
   .project-grid { display: grid; gap: 50px; }
   .project--wide, .project--tall { grid-column: 1; padding-top: 0 !important; }
