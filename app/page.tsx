@@ -198,21 +198,38 @@ function Work() {
         </Reveal>
         <Reveal className="section-heading__aside" delay={0.1}>
           <p>Sound and image built with intention. A selection of identities, covers, illustrations and moving worlds.</p>
-          <a
-            className="youtube-beats"
-            href="https://www.youtube.com/results?search_query=EVILBEAR.JPG+beats"
-            target="_blank"
-            rel="noreferrer"
-            data-cursor="link"
-            aria-label="Listen to EVILBEAR.JPG beats on YouTube (opens in a new tab)"
-          >
-            <span className="youtube-beats__play" aria-hidden="true">▶</span>
-            <span className="youtube-beats__copy">
-              <small>Listen to the beats</small>
-              <strong>YouTube</strong>
-            </span>
-            <Arrow />
-          </a>
+          <div className="work-links">
+            <a
+              className="work-link work-link--youtube"
+              href="https://www.youtube.com/@EVILBEARJPG"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="link"
+              aria-label="Listen to EVILBEAR.JPG beats on the official YouTube channel (opens in a new tab)"
+            >
+              <span className="work-link__icon" aria-hidden="true">▶</span>
+              <span className="work-link__copy">
+                <small>Listen to the beats</small>
+                <strong>YouTube</strong>
+              </span>
+              <Arrow />
+            </a>
+            <a
+              className="work-link work-link--instagram"
+              href="https://www.instagram.com/evilbear.jpg/"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="link"
+              aria-label="Contact EVILBEAR.JPG on Instagram (opens in a new tab)"
+            >
+              <span className="work-link__icon" aria-hidden="true">IG</span>
+              <span className="work-link__copy">
+                <small>Contact &amp; projects</small>
+                <strong>Instagram</strong>
+              </span>
+              <Arrow />
+            </a>
+          </div>
           <span className="section-years">2025 — 2026</span>
         </Reveal>
       </div>
@@ -305,7 +322,7 @@ function Contact() {
           <p>Have a cover, track, identity or visual world in mind? Send the signal.</p>
           <a className="contact-email" href="mailto:hello@evilbear.jpg" data-cursor="link">hello@evilbear.jpg <Arrow /></a>
           <div className="social-links">
-            <a href="https://instagram.com/evilbear.jpg" target="_blank" rel="noreferrer" data-cursor="link">Instagram <Arrow /></a>
+            <a href="https://www.instagram.com/evilbear.jpg/" target="_blank" rel="noreferrer" data-cursor="link">Instagram <Arrow /></a>
             <a href="https://www.behance.net/" target="_blank" rel="noreferrer" data-cursor="link">Behance <Arrow /></a>
           </div>
         </Reveal>
@@ -341,7 +358,7 @@ function Footer() {
       <div className="footer-bottom">
         <p>Beatmaker / Designer / Illustrator / Video editor</p>
         <div>
-          <a href="https://instagram.com/evilbear.jpg" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.instagram.com/evilbear.jpg/" target="_blank" rel="noreferrer">Instagram</a>
           <a href="https://www.behance.net/" target="_blank" rel="noreferrer">Behance</a>
         </div>
         <p>© {new Date().getFullYear()} EVILBEAR.JPG</p>
