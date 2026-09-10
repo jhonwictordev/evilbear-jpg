@@ -3,378 +3,152 @@
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 
-const projects = [
-  { number: "01", name: "Scarlet Ritual", category: "Cover Art / Design", year: "2026", className: "project--wide project--ritual" },
-  { number: "02", name: "Nocturnal Form", category: "Illustration", year: "2026", className: "project--tall project--form" },
-  { number: "03", name: "Red Signal", category: "Music Visualizer", year: "2025", className: "project--tall project--signal" },
-  { number: "04", name: "After Midnight", category: "Video Editing", year: "2025", className: "project--wide project--midnight" },
-];
+type Language = "pt" | "en";
 
-const services = [
-  { number: "01", title: "Beatmaking", detail: "Production · Arrangement · Sound design" },
-  { number: "02", title: "Graphic Design", detail: "Cover art · Campaigns · Visual identity" },
-  { number: "03", title: "Illustration", detail: "Characters · Editorial · Merch artwork" },
-  { number: "04", title: "Video Editing", detail: "Visualizers · Reels · Music videos" },
-];
+const socials = {
+  youtube: "https://www.youtube.com/@EVILBEARJPG",
+  instagram: "https://www.instagram.com/evilbear.jpg/",
+  visualizer: "https://www.behance.net/gallery/171434971/Visualizer",
+  covers: "https://www.behance.net/gallery/158804245/Artist-cover",
+};
 
-const navItems = ["Work", "Services", "About", "Contact"];
+const copy = {
+  pt: {
+    nav: ["Trabalhos", "Serviços", "Sobre", "Contato"],
+    start: "Iniciar projeto",
+    menu: "Abrir menu",
+    close: "Fechar menu",
+    heroEyebrow: "Identidade criativa independente · Brasil — Mundo",
+    heroTitle: "EVILBEAR.JPG",
+    heroRole: "Beatmaker · Designer · Ilustrador · Editor de vídeo",
+    heroText: "Criando sons e visuais que ficam na memória.",
+    work: "Ver trabalhos",
+    scroll: "Role para entrar",
+    selected: "01 / Arquivo selecionado",
+    selectedTitle: "Trabalhos selecionados",
+    selectedText: "Som e imagem feitos com intenção. Uma seleção de identidades, capas, ilustrações e mundos em movimento.",
+    beatTitle: "Ouça os beats",
+    beatText: "Acesse o canal do YouTube e escute os lançamentos.",
+    instaTitle: "Instagram",
+    instaText: "Contato, bastidores e novidades em @evilbear.jpg.",
+    behanceEyebrow: "02 / Portfólio Behance",
+    behanceTitle: "Capas & animações",
+    behanceText: "Projetos prontos para ver em detalhe no Behance.",
+    cards: [
+      { number: "01", title: "Capas de artistas", type: "ARTIST COVER", text: "Capas que traduzem som, atmosfera e personalidade visual.", link: "Ver capas" },
+      { number: "02", title: "Visualizers", type: "VISUALIZER", text: "Animações e visualizers criados para ampliar cada lançamento.", link: "Ver animações" },
+    ],
+    servicesEyebrow: "03 / Serviços",
+    servicesTitle: "Do conceito ao impacto.",
+    services: [
+      ["01", "Produção musical", "Beats, direção sonora e faixas que carregam uma identidade própria."],
+      ["02", "Identidade visual", "Sistemas visuais que tornam artistas, marcas e projetos inesquecíveis."],
+      ["03", "Capas & ilustração", "Arte com textura, presença e intenção para cada lançamento."],
+      ["04", "Motion & edição", "Visualizers, vídeos e movimento feitos para prender a atenção."],
+    ],
+    aboutEyebrow: "04 / Sobre",
+    aboutTitle: "Som, imagem e presença.",
+    aboutText: "EVILBEAR.JPG é o universo criativo de Jhon Wictor: uma linguagem construída entre beats, design, ilustração e imagem em movimento. Cada trabalho nasce para ter peso, textura e uma assinatura que não passa despercebida.",
+    aboutFact: "Disponível para projetos selecionados no Brasil e no mundo.",
+    manifesto: "A estética é o som antes de ser ouvido.",
+    contactEyebrow: "05 / Contato",
+    contactTitle: "Vamos criar algo que fique.",
+    contactText: "Tem uma ideia, lançamento ou projeto? Conte o essencial e vamos conversar.",
+    form: { name: "Seu nome", email: "Seu e-mail", service: "Qual serviço você procura?", message: "Conte sobre o projeto", send: "Enviar mensagem", sent: "Mensagem preparada. Obrigado pelo contato.", options: ["Produção musical", "Identidade visual", "Capas & ilustração", "Motion & edição", "Outro"] },
+    contactSocial: "Ou fale pelo Instagram",
+    footer: "Todos os direitos reservados.",
+    language: "English",
+  },
+  en: {
+    nav: ["Work", "Services", "About", "Contact"],
+    start: "Start a project",
+    menu: "Open menu",
+    close: "Close menu",
+    heroEyebrow: "Independent creative identity · Brazil — Worldwide",
+    heroTitle: "EVILBEAR.JPG",
+    heroRole: "Beatmaker · Designer · Illustrator · Video editor",
+    heroText: "Creating sounds and visuals that stay with you.",
+    work: "View work",
+    scroll: "Scroll to enter",
+    selected: "01 / Selected archive",
+    selectedTitle: "Selected work",
+    selectedText: "Sound and image built with intention. A selection of identities, covers, illustrations and moving worlds.",
+    beatTitle: "Listen to the beats",
+    beatText: "Visit the YouTube channel and hear the latest releases.",
+    instaTitle: "Instagram",
+    instaText: "Contact, behind the scenes and updates at @evilbear.jpg.",
+    behanceEyebrow: "02 / Behance portfolio",
+    behanceTitle: "Covers & animation",
+    behanceText: "Finished projects ready to explore in detail on Behance.",
+    cards: [
+      { number: "01", title: "Artist covers", type: "ARTIST COVER", text: "Covers that translate sound, atmosphere and visual personality.", link: "View covers" },
+      { number: "02", title: "Visualizers", type: "VISUALIZER", text: "Animation and visualizers made to expand every release.", link: "View animations" },
+    ],
+    servicesEyebrow: "03 / Services",
+    servicesTitle: "From concept to impact.",
+    services: [
+      ["01", "Music production", "Beats, sound direction and tracks with their own identity."],
+      ["02", "Visual identity", "Visual systems that make artists, brands and projects unforgettable."],
+      ["03", "Covers & illustration", "Artwork with texture, presence and intention for every release."],
+      ["04", "Motion & editing", "Visualizers, videos and motion designed to hold attention."],
+    ],
+    aboutEyebrow: "04 / About",
+    aboutTitle: "Sound, image and presence.",
+    aboutText: "EVILBEAR.JPG is Jhon Wictor's creative universe: a language built between beats, design, illustration and moving image. Every project is made to carry weight, texture and a signature that cannot be ignored.",
+    aboutFact: "Available for selected projects in Brazil and worldwide.",
+    manifesto: "Aesthetics are sound before they are heard.",
+    contactEyebrow: "05 / Contact",
+    contactTitle: "Let's make something that lasts.",
+    contactText: "Have an idea, release or project? Share the essentials and let's talk.",
+    form: { name: "Your name", email: "Your email", service: "What do you need?", message: "Tell me about the project", send: "Send message", sent: "Message ready. Thanks for getting in touch.", options: ["Music production", "Visual identity", "Covers & illustration", "Motion & editing", "Other"] },
+    contactSocial: "Or reach out on Instagram",
+    footer: "All rights reserved.",
+    language: "Português",
+  },
+} as const;
 
-function Arrow({ down = false }: { down?: boolean }) {
-  return <span aria-hidden="true">{down ? "↓" : "↗"}</span>;
+const projectLabels = {
+  pt: [["01", "Identidades", "Design"], ["02", "Capas", "Arte"], ["03", "Visualizers", "Motion"], ["04", "Sons", "Beats"]],
+  en: [["01", "Identities", "Design"], ["02", "Covers", "Artwork"], ["03", "Visualizers", "Motion"], ["04", "Sounds", "Beats"]],
+} as const;
+
+function Arrow() { return <span aria-hidden="true">↗</span>; }
+
+function LanguageSwitch({ language, onChange, compact = false }: { language: Language; onChange: (value: Language) => void; compact?: boolean }) {
+  return <div className={compact ? "language-switch language-switch--mobile" : "language-switch"} aria-label="Language selector">
+    <button className={language === "pt" ? "is-active" : ""} onClick={() => onChange("pt")} aria-pressed={language === "pt"}>PT</button>
+    <span>/</span>
+    <button className={language === "en" ? "is-active" : ""} onClick={() => onChange("en")} aria-pressed={language === "en"}>EN</button>
+  </div>;
 }
 
-function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 42 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+function Navbar({ t, language, setLanguage }: { t: typeof copy.pt; language: Language; setLanguage: (value: Language) => void }) {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  return (
-    <header className={"site-header " + (scrolled ? "site-header--scrolled" : "")}>
-      <a className="brand" href="#home" aria-label="EVILBEAR.JPG — início" data-cursor="link">
-        <img src="/evilbear-logo.webp" width="1800" height="370" alt="" aria-hidden="true" />
-      </a>
-      <nav className="desktop-nav" aria-label="Navegação principal">
-        <a href="#home" data-cursor="link">Home</a>
-        {navItems.map((item) => (
-          <a key={item} href={"#" + item.toLowerCase()} data-cursor="link">{item}</a>
-        ))}
-      </nav>
-      <a className="button button--compact header-cta" href="#contact" data-cursor="link">
-        Start a project <Arrow />
-      </a>
-      <button
-        className={"menu-button " + (open ? "menu-button--open" : "")}
-        type="button"
-        aria-label={open ? "Fechar menu" : "Abrir menu"}
-        aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <span />
-        <span />
-      </button>
-      <motion.nav
-        className="mobile-nav"
-        aria-label="Navegação mobile"
-        initial={false}
-        animate={open ? "open" : "closed"}
-        variants={{
-          open: { opacity: 1, visibility: "visible", y: 0 },
-          closed: { opacity: 0, visibility: "hidden", y: -16 },
-        }}
-        transition={{ duration: 0.25 }}
-      >
-        <a href="#home" onClick={() => setOpen(false)}>Home</a>
-        {navItems.map((item, index) => (
-          <a key={item} href={"#" + item.toLowerCase()} onClick={() => setOpen(false)}>
-            <span>0{index + 1}</span>{item}
-          </a>
-        ))}
-      </motion.nav>
-    </header>
-  );
+  const ids = ["work", "services", "about", "contact"];
+  const go = (id: string) => { setOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
+  return <header className="site-header">
+    <button className="brand" onClick={() => go("home")} aria-label="EVILBEAR.JPG home">EVILBEAR.JPG</button>
+    <nav className="desktop-nav" aria-label="Navegação principal">{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}</nav>
+    <div className="header-actions"><LanguageSwitch language={language} onChange={setLanguage} /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>
+    <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? t.close : t.menu}>{open ? "×" : "☰"}</button>
+    {open && <div className="mobile-nav">{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}<LanguageSwitch language={language} onChange={setLanguage} compact /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>}
+  </header>;
 }
 
-function Hero() {
-  const reduceMotion = useReducedMotion();
-  return (
-    <section className="hero section-shell" id="home">
-      <div className="hero-orbit hero-orbit--one" aria-hidden="true" />
-      <div className="hero-orbit hero-orbit--two" aria-hidden="true" />
-      <motion.div
-        className="hero-art"
-        initial={reduceMotion ? false : { opacity: 0, scale: 1.05 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <img src="/site-image.webp" width="1672" height="941" fetchPriority="high" alt="Urso vermelho da EVILBEAR.JPG produzindo música em um estúdio iluminado por neon" />
-        <div className="hero-art__fade" />
-      </motion.div>
-      <div className="hero-content">
-        <motion.p
-          className="eyebrow"
-          initial={reduceMotion ? false : { opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-        >
-          Independent creative identity <span>Brazil — Worldwide</span>
-        </motion.p>
-        <h1 className="hero-title" aria-label="EVILBEAR.JPG">
-          <motion.img
-            className="hero-logo"
-            src="/evilbear-logo.webp"
-            width="1800"
-            height="370"
-            alt="EVILBEAR.JPG"
-            initial={reduceMotion ? false : { opacity: 0, y: 80, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.95, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </h1>
-        <motion.div
-          className="hero-bottom"
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.6 }}
-        >
-          <div>
-            <p className="hero-disciplines">Beatmaker · Designer · Illustrator · Video editor</p>
-            <p className="hero-tagline">Creating sounds &amp; visuals.</p>
-          </div>
-          <div className="hero-actions">
-            <a className="button button--primary" href="#work" data-cursor="link">View my work <Arrow down /></a>
-            <a className="button button--ghost" href="#contact" data-cursor="link">Start a project <Arrow /></a>
-          </div>
-        </motion.div>
-      </div>
-      <div className="scroll-note" aria-hidden="true"><span>Scroll to enter</span><i /></div>
-    </section>
-  );
-}
+function Hero({ t }: { t: typeof copy.pt }) { return <section className="hero section-shell" id="home"><div className="hero-copy"><p className="eyebrow"><i />{t.heroEyebrow}</p><h1>{t.heroTitle}</h1><p className="hero-role">{t.heroRole}</p><p className="hero-text">{t.heroText}</p><div className="hero-actions"><a className="button button--primary" href="#work">{t.work} <span>↓</span></a><a className="button" href="#contact">{t.start} <Arrow /></a></div></div><div className="hero-art"><img src="/site-image.webp" alt="EVILBEAR.JPG visual identity" /></div><span className="scroll-note">{t.scroll}</span></section>; }
 
-function Marquee() {
-  const phrase = "BEATMAKER ✦ DESIGNER ✦ ILLUSTRATOR ✦ VIDEO EDITOR ✦ EVILBEAR.JPG ✦";
-  return (
-    <div className="marquee" aria-label={phrase}>
-      <div className="marquee__track"><span>{phrase}</span><span aria-hidden="true">{phrase}</span></div>
-    </div>
-  );
-}
+function Work({ t, language }: { t: typeof copy.pt; language: Language }) { return <section className="work section-shell" id="work"><h2 className="section-title">{t.selectedTitle}</h2><p className="section-intro">{t.selectedText}</p><div className="project-grid">{projectLabels[language].map(([number, title, type]) => <article className="project-card" key={number}><span>{number}</span><div><p>{type}</p><h3>{title}</h3></div><img src="/site-image.webp" alt="" /></article>)}</div></section>; }
 
-function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.article
-      className={"project " + project.className}
-      data-cursor="view"
-      initial={reduceMotion ? false : { opacity: 0, clipPath: "inset(0 0 100% 0)" }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-      viewport={{ once: true, margin: "-8%" }}
-      transition={{ duration: 0.85, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <a href="#contact" aria-label={"Ver projeto " + project.name}>
-        <div className="project__visual">
-          <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="" aria-hidden="true" />
-          <span className="project__number">{project.number}</span>
-          <span className="project__mark">EB</span>
-          <div className="project__noise" />
-        </div>
-        <div className="project__meta">
-          <div><p>{project.name}</p><span>{project.category}</span></div>
-          <span>{project.year}</span>
-        </div>
-      </a>
-    </motion.article>
-  );
-}
+function Behance({ t }: { t: typeof copy.pt }) { return <section className="behance section-shell" id="behance"><p className="eyebrow"><i />{t.behanceEyebrow}</p><h2 className="section-title">{t.behanceTitle}</h2><p className="section-intro">{t.behanceText}</p><div className="behance-grid">{t.cards.map((card, index) => <a key={card.number} className={`behance-card behance-card--${index === 0 ? "covers" : "visualizer"}`} href={index === 0 ? socials.covers : socials.visualizer} target="_blank" rel="noreferrer"><div className="behance-card__visual"><img src="/site-image.webp" alt="" /><span>{index === 0 ? "COVERS" : "FX"}</span></div><div className="behance-card__body"><p>{card.number} / {card.type}</p><h3>{card.title}</h3><span>{card.text}</span><strong>{card.link} <Arrow /></strong></div></a>)}</div></section>; }
 
-function Work() {
-  return (
-    <section className="work section-shell" id="work">
-      <div className="section-heading">
-        <Reveal>
-          <p className="section-kicker">01 / Selected archive</p>
-          <h2>Selected<br /><span>Work</span></h2>
-        </Reveal>
-        <Reveal className="section-heading__aside" delay={0.1}>
-          <p>Sound and image built with intention. A selection of identities, covers, illustrations and moving worlds.</p>
-          <span>2025 — 2026</span>
-        </Reveal>
-      </div>
-      <div className="project-grid">
-        {projects.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
-      </div>
-    </section>
-  );
-}
+function Services({ t }: { t: typeof copy.pt }) { return <section className="services-section section-shell" id="services"><p className="eyebrow"><i />{t.servicesEyebrow}</p><h2 className="section-title">{t.servicesTitle}</h2><div className="services">{t.services.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>; }
 
-function Services() {
-  const [active, setActive] = useState(0);
-  return (
-    <section className="services section-shell" id="services">
-      <div className="services-intro">
-        <Reveal><p className="section-kicker">02 / Capabilities</p><h2>What I do</h2></Reveal>
-        <Reveal className="services-preview" delay={0.1}>
-          <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="" aria-hidden="true" />
-          <span>0{active + 1}</span>
-        </Reveal>
-      </div>
-      <div className="service-list">
-        {services.map((service, index) => (
-          <motion.a
-            href="#contact"
-            className={active === index ? "service service--active" : "service"}
-            key={service.title}
-            onMouseEnter={() => setActive(index)}
-            onFocus={() => setActive(index)}
-            data-cursor="link"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: index * 0.05 }}
-          >
-            <span className="service__number">{service.number}</span>
-            <span className="service__title">{service.title}</span>
-            <span className="service__detail">{service.detail}</span>
-            <Arrow />
-          </motion.a>
-        ))}
-      </div>
-    </section>
-  );
-}
+function About({ t }: { t: typeof copy.pt }) { return <><section className="about section-shell" id="about"><p className="eyebrow"><i />{t.aboutEyebrow}</p><div><h2 className="section-title">{t.aboutTitle}</h2><p>{t.aboutText}</p><small>{t.aboutFact}</small></div></section><section className="manifesto"><p>{t.manifesto}</p></section></>; }
 
-function About() {
-  return (
-    <section className="about section-shell" id="about">
-      <div className="about-title">
-        <Reveal><p className="section-kicker">03 / Behind the identity</p><h2>About<br /><span>Evilbear</span></h2></Reveal>
-      </div>
-      <Reveal className="about-portrait" delay={0.05}>
-        <img src="/site-image.webp" width="1672" height="941" loading="lazy" alt="Urso vermelho da EVILBEAR.JPG no estúdio de produção musical" />
-        <span>Est. in the shadows</span>
-      </Reveal>
-      <Reveal className="about-copy" delay={0.12}>
-        <p className="about-lead">EVILBEAR.JPG is a multidisciplinary creative identity focused on music, design, illustration and audiovisual experiences.</p>
-        <p>Each project is treated as a complete universe — where sound, image and attitude speak the same language. Made in Brazil, connected worldwide.</p>
-        <dl>
-          <div><dt>Based in</dt><dd>Brazil</dd></div>
-          <div><dt>Focus</dt><dd>Music &amp; visuals</dd></div>
-          <div><dt>Available</dt><dd><i /> Freelance</dd></div>
-        </dl>
-      </Reveal>
-    </section>
-  );
-}
+function Contact({ t }: { t: typeof copy.pt }) { const [sent, setSent] = useState(false); const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSent(true); }; return <section className="contact section-shell" id="contact"><p className="eyebrow"><i />{t.contactEyebrow}</p><div className="contact-grid"><div><h2 className="section-title">{t.contactTitle}</h2><p>{t.contactText}</p><a className="contact-social" href={socials.instagram} target="_blank" rel="noreferrer">{t.contactSocial} <Arrow /></a></div><form onSubmit={submit}><input required placeholder={t.form.name} aria-label={t.form.name} /><input required type="email" placeholder={t.form.email} aria-label={t.form.email} /><select required defaultValue="" aria-label={t.form.service}><option value="" disabled>{t.form.service}</option>{t.form.options.map(option => <option key={option}>{option}</option>)}</select><textarea required placeholder={t.form.message} aria-label={t.form.message} rows={4} /><button className="button button--primary" type="submit">{t.form.send} <Arrow /></button>{sent && <p className="form-message">{t.form.sent}</p>}</form></div></section>; }
 
-function Manifesto() {
-  return (
-    <section className="manifesto section-shell" aria-label="Manifesto">
-      <Reveal><p>I don&apos;t just make visuals.</p><h2>I build <span className="chrome-text">worlds.</span></h2></Reveal>
-      <div className="manifesto-stamp" aria-hidden="true"><span>Sound</span><i>×</i><span>Visual</span><i>×</i><span>Identity</span></div>
-    </section>
-  );
-}
+function Footer({ t }: { t: typeof copy.pt }) { return <footer className="footer section-shell"><span>EVILBEAR.JPG</span><p>© 2026 {t.footer}</p><div><a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a><a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={socials.covers} target="_blank" rel="noreferrer">Behance</a></div></footer>; }
 
-function Contact() {
-  const [sent, setSent] = useState(false);
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSent(true);
-  };
-  return (
-    <section className="contact section-shell" id="contact">
-      <Reveal><p className="section-kicker">04 / Contact</p><h2>Let&apos;s create<br /><span className="chrome-text">something evil.</span></h2></Reveal>
-      <div className="contact-grid">
-        <Reveal className="contact-left" delay={0.08}>
-          <p>Have a cover, track, identity or visual world in mind? Send the signal.</p>
-          <a className="contact-email" href="mailto:hello@evilbear.jpg" data-cursor="link">hello@evilbear.jpg <Arrow /></a>
-          <div className="social-links">
-            <a href="https://instagram.com/evilbear.jpg" target="_blank" rel="noreferrer" data-cursor="link">Instagram <Arrow /></a>
-            <a href="https://www.behance.net/" target="_blank" rel="noreferrer" data-cursor="link">Behance <Arrow /></a>
-          </div>
-        </Reveal>
-        <Reveal className="contact-form-wrap" delay={0.14}>
-          <form className="contact-form" onSubmit={submit}>
-            <label><span>Name</span><input name="name" type="text" autoComplete="name" required placeholder="Your name" /></label>
-            <label><span>Email</span><input name="email" type="email" autoComplete="email" required placeholder="you@email.com" /></label>
-            <label>
-              <span>Project type</span>
-              <select name="projectType" defaultValue="" required>
-                <option value="" disabled>Select a service</option>
-                <option>Beatmaking</option><option>Graphic design</option><option>Illustration</option><option>Video editing</option><option>Multidisciplinary project</option>
-              </select>
-            </label>
-            <label><span>Message</span><textarea name="message" required rows={4} placeholder="Tell me about your world." /></label>
-            <button className="button button--primary button--submit" type="submit" data-cursor="link">
-              {sent ? "Signal received" : "Send message"} <Arrow />
-            </button>
-            {sent && <p className="form-status" role="status">Thanks — your project is on the radar.</p>}
-          </form>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
+function CustomCursor() { const reduced = useReducedMotion(); const x = useMotionValue(-100); const y = useMotionValue(-100); const sx = useSpring(x, { stiffness: 400, damping: 28 }); const sy = useSpring(y, { stiffness: 400, damping: 28 }); useEffect(() => { if (reduced) return; const move = (event: PointerEvent) => { x.set(event.clientX); y.set(event.clientY); }; window.addEventListener("pointermove", move); return () => window.removeEventListener("pointermove", move); }, [reduced, x, y]); if (reduced) return null; return <motion.div className="cursor" style={{ x: sx, y: sy }} aria-hidden="true" />; }
 
-function Footer() {
-  return (
-    <footer className="footer section-shell">
-      <a className="footer-brand" href="#home" data-cursor="link" aria-label="Voltar ao início">
-        <img src="/evilbear-logo.webp" width="1800" height="370" alt="EVILBEAR.JPG" />
-      </a>
-      <div className="footer-bottom">
-        <p>Beatmaker / Designer / Illustrator / Video editor</p>
-        <div>
-          <a href="https://instagram.com/evilbear.jpg" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://www.behance.net/" target="_blank" rel="noreferrer">Behance</a>
-        </div>
-        <p>© {new Date().getFullYear()} EVILBEAR.JPG</p>
-      </div>
-    </footer>
-  );
-}
-
-function CustomCursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const springX = useSpring(x, { stiffness: 500, damping: 36, mass: 0.2 });
-  const springY = useSpring(y, { stiffness: 500, damping: 36, mass: 0.2 });
-  const [mode, setMode] = useState("default");
-
-  useEffect(() => {
-    const move = (event: PointerEvent) => {
-      x.set(event.clientX);
-      y.set(event.clientY);
-      const target = event.target as HTMLElement;
-      const cursorTarget = target.closest("[data-cursor]")?.getAttribute("data-cursor");
-      setMode(cursorTarget || "default");
-      document.documentElement.style.setProperty("--mouse-x", event.clientX + "px");
-      document.documentElement.style.setProperty("--mouse-y", event.clientY + "px");
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
-  }, [x, y]);
-
-  return (
-    <motion.div className={"custom-cursor custom-cursor--" + mode} style={{ x: springX, y: springY }} aria-hidden="true">
-      {mode === "view" && <span>View</span>}
-    </motion.div>
-  );
-}
-
-export default function Home() {
-  return (
-    <>
-      <a className="skip-link" href="#main">Skip to content</a>
-      <CustomCursor />
-      <div className="mouse-glow" aria-hidden="true" />
-      <div className="grain" aria-hidden="true" />
-      <Navbar />
-      <main id="main">
-        <Hero /><Marquee /><Work /><Services /><About /><Manifesto /><Contact />
-      </main>
-      <Footer />
-    </>
-  );
-}
+export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><Work t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
