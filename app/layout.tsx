@@ -10,19 +10,19 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(origin),
-    title: "EVILBEAR.JPG — Sound, Visual & Identity",
-    description: "Independent creative identity from Brazil creating music, design, illustration and audiovisual worlds.",
+    title: "EVILBEAR.JPG — Som, Visual & Identidade",
+    description: "Identidade criativa independente do Brasil, criando música, design, ilustração e mundos audiovisuais.",
     keywords: ["beatmaker", "designer", "illustrator", "video editor", "Brazil", "EVILBEAR.JPG"],
     openGraph: {
-      title: "EVILBEAR.JPG — Sound, Visual & Identity",
-      description: "Creating sounds & visuals. Building worlds from Brazil to everywhere.",
+      title: "EVILBEAR.JPG — Som, Visual & Identidade",
+      description: "Criando sons e visuais. Construindo mundos do Brasil para todos os lugares.",
       type: "website",
       images: [{ url: origin + "/og.jpg", width: 1672, height: 941, alt: "EVILBEAR.JPG — estúdio de produção musical" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "EVILBEAR.JPG — Sound, Visual & Identity",
-      description: "Creating sounds & visuals. Building worlds.",
+      title: "EVILBEAR.JPG — Som, Visual & Identidade",
+      description: "Criando sons e visuais. Construindo mundos.",
       images: [origin + "/og.jpg"],
     },
     icons: { icon: "/mascot.png", shortcut: "/mascot.png" },
@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body>{children}</body>
     </html>
   );
