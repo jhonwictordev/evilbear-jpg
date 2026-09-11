@@ -31,7 +31,7 @@ a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 button { color: inherit; }
 img { display: block; max-width: 100%; }
-.section-shell { width: min(100% - 64px, 1440px); margin-inline: auto; }
+.section-shell { width: min(calc(100% - 64px), 1440px); margin-inline: auto; min-width: 0; }
 .skip-link {
   position: fixed;
   z-index: 9999;
@@ -710,3 +710,31 @@ img { display: block; max-width: 100%; }
 .section-title { line-height: 1.08; letter-spacing: .018em; }
 .manifesto p { line-height: 1.08; letter-spacing: .018em; }
 .behance-card__visual > span { line-height: 1; letter-spacing: .018em; }
+
+/* Keep the supplied brand artwork intact and size text to its container. */
+.brand { width: 170px; max-width: 100%; padding: 0; }
+.brand img, .footer > span img { width: 100%; height: auto; }
+.footer > span { max-width: 200px; }
+.hero-copy { width: 100%; min-width: 0; }
+.hero h1 { width: min(100%, 1000px); margin: 0; line-height: 1; }
+.hero h1 img { width: 100%; height: auto; }
+.hero-art img { object-position: right center; }
+.hero .eyebrow { flex-wrap: wrap; line-height: 1.6; }
+.hero-role { line-height: 1.7; }
+.about > div, .contact-grid > div, .contact-grid > form { min-width: 0; }
+.section-title, .about h2.section-title, .contact h2.section-title {
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: .025em;
+  overflow-wrap: anywhere;
+}
+.manifesto p { line-height: 1.18; overflow-wrap: anywhere; }
+@media (max-width: 780px) {
+  .section-shell { width: calc(100% - 36px); }
+  .header-actions .language-switch { display: flex; }
+  .brand { width: 130px; }
+  .hero { min-height: 740px; padding-top: 120px; padding-bottom: 64px; }
+  .hero h1 { width: 100%; margin: 0; }
+  .section-title, .about h2.section-title, .contact h2.section-title { font-size: clamp(2.3rem, 9vw, 4rem); }
+}
