@@ -4,6 +4,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-moti
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 
 type Language = "pt" | "en";
+type Copy = (typeof copy)[Language];
 
 const socials = {
   youtube: "https://www.youtube.com/@EVILBEARJPG",
@@ -112,7 +113,24 @@ const projectLabels = {
   en: [["01", "Identities", "Design"], ["02", "Covers", "Artwork"], ["03", "Visualizers", "Motion"], ["04", "Sounds", "Beats"]],
 } as const;
 
-function Arrow() { return <span aria-hidden="true">↗</span>; }
+function Arrow({ down = false }: { down?: boolean }) { return <span aria-hidden="true">{down ? "↓" : "↗"}</span>; }
+
+function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduceMotion ? false : { opacity: 0, y: 42 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+
 
 function LanguageSwitch({ language, onChange, compact = false }: { language: Language; onChange: (value: Language) => void; compact?: boolean }) {
   return <div className={compact ? "language-switch language-switch--mobile" : "language-switch"} aria-label="Language selector">
@@ -122,7 +140,7 @@ function LanguageSwitch({ language, onChange, compact = false }: { language: Lan
   </div>;
 }
 
-function Navbar({ t, language, setLanguage }: { t: typeof copy.pt; language: Language; setLanguage: (value: Language) => void }) {
+function Navbar({ t, language, setLanguage }: { t: Copy; language: Language; setLanguage: (value: Language) => void }) {
   const [open, setOpen] = useState(false);
   const ids = ["work", "services", "about", "contact"];
   const go = (id: string) => { setOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
@@ -135,20 +153,112 @@ function Navbar({ t, language, setLanguage }: { t: typeof copy.pt; language: Lan
   </header>;
 }
 
-function Hero({ t }: { t: typeof copy.pt }) { return <section className="hero section-shell" id="home"><div className="hero-copy"><p className="eyebrow"><i />{t.heroEyebrow}</p><h1><img src="/evilbear-logo.webp" alt={t.heroTitle} /></h1><p className="hero-role">{t.heroRole}</p><p className="hero-text">{t.heroText}</p><div className="hero-actions"><a className="button button--primary" href="#work">{t.work} <span>↓</span></a><a className="button" href="#contact">{t.start} <Arrow /></a></div></div><div className="hero-art"><img src="/site-image.webp" alt="" /></div><span className="scroll-note">{t.scroll}</span></section>; }
+function Hero({ t }: { t: Copy }) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <section className="hero section-shell" id="home">
+      <div className="hero-orbit hero-orbit--one" aria-hidden="true" />
+      <div className="hero-orbit hero-orbit--two" aria-hidden="true" />
+      <motion.div
+        className="hero-art"
+        initial={reduceMotion ? false : { opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <img src="/site-image.webp" width="1672" height="941" fetchPriority="high" alt="Urso vermelho da EVILBEAR.JPG produzindo música em um estúdio iluminado por neon" />
+        <div className="hero-art__fade" />
+      </motion.div>
+      <div className="hero-content">
+        <motion.p
+          className="eyebrow"
+          initial={reduceMotion ? false : { opacity: 0, x: -24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
+          {t.heroEyebrow}
+        </motion.p>
+        <h1 className="hero-title" aria-label="EVILBEAR.JPG">
+          <motion.img
+            className="hero-logo"
+            src="/evilbear-logo.webp"
+            width="1800"
+            height="370"
+            alt="EVILBEAR.JPG"
+            initial={reduceMotion ? false : { opacity: 0, y: 80, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.95, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </h1>
+        <motion.div
+          className="hero-bottom"
+          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.6 }}
+        >
+          <div>
+            <p className="hero-disciplines">{t.heroRole}</p>
+            <p className="hero-tagline">{t.heroText}</p>
+          </div>
+          <div className="hero-actions">
+            <a className="button button--primary" href="#work" data-cursor="link">{t.work} <Arrow down /></a>
+            <a className="button button--ghost" href="#contact" data-cursor="link">{t.start} <Arrow /></a>
+          </div>
+        </motion.div>
+      </div>
+      <div className="scroll-note" aria-hidden="true"><span>{t.scroll}</span><i /></div>
+    </section>
+  );
+}
 
-function Work({ t, language }: { t: typeof copy.pt; language: Language }) { return <section className="work section-shell" id="work"><h2 className="section-title">{t.selectedTitle}</h2><p className="section-intro">{t.selectedText}</p><div className="project-grid">{projectLabels[language].map(([number, title, type]) => <article className="project-card" key={number}><span>{number}</span><div><p>{type}</p><h3>{title}</h3></div><img src="/site-image.webp" alt="" /></article>)}</div></section>; }
 
-function Behance({ t }: { t: typeof copy.pt }) { return <section className="behance section-shell" id="behance"><p className="eyebrow"><i />{t.behanceEyebrow}</p><h2 className="section-title">{t.behanceTitle}</h2><p className="section-intro">{t.behanceText}</p><div className="behance-grid">{t.cards.map((card, index) => <a key={card.number} className={`behance-card behance-card--${index === 0 ? "covers" : "visualizer"}`} href={index === 0 ? socials.covers : socials.visualizer} target="_blank" rel="noreferrer"><div className="behance-card__visual"><img src="/site-image.webp" alt="" /><span>{index === 0 ? "COVERS" : "FX"}</span></div><div className="behance-card__body"><p>{card.number} / {card.type}</p><h3>{card.title}</h3><span>{card.text}</span><strong>{card.link} <Arrow /></strong></div></a>)}</div></section>; }
 
-function Services({ t }: { t: typeof copy.pt }) { return <section className="services-section section-shell" id="services"><p className="eyebrow"><i />{t.servicesEyebrow}</p><h2 className="section-title">{t.servicesTitle}</h2><div className="services">{t.services.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>; }
+function Work({ t, language }: { t: Copy; language: Language }) {
+  const shapes = ["project--wide project--ritual", "project--tall project--form", "project--tall project--signal", "project--wide project--midnight"];
+  return <section className="work section-shell" id="work">
+    <div className="section-heading">
+      <Reveal><h2>{language === "pt" ? <>Trabalhos<br /><span>selecionados</span></> : <>Selected<br /><span>work</span></>}</h2></Reveal>
+      <Reveal className="section-heading__aside" delay={0.1}>
+        <p>{t.selectedText}</p>
+        <div className="work-links">
+          <a className="work-link work-link--youtube" href={socials.youtube} target="_blank" rel="noopener noreferrer" data-cursor="link"><span className="work-link__icon" aria-hidden="true">▶</span><span className="work-link__copy"><small>{t.beatTitle}</small><strong>YouTube</strong></span><Arrow /></a>
+          <a className="work-link work-link--instagram" href={socials.instagram} target="_blank" rel="noopener noreferrer" data-cursor="link"><span className="work-link__icon" aria-hidden="true">IG</span><span className="work-link__copy"><small>{t.nav[3]}</small><strong>Instagram</strong></span><Arrow /></a>
+        </div>
+      </Reveal>
+    </div>
+    <div className="project-grid">{projectLabels[language].map(([number, title, type], index) =>
+      <Reveal key={number} className={"project " + shapes[index]} delay={index * .06}>
+        <a href={index === 3 ? socials.youtube : index === 2 ? socials.visualizer : socials.covers} target="_blank" rel="noopener noreferrer" data-cursor="view">
+          <div className="project__visual"><img src="/site-image.webp" alt="" loading="lazy" /><span className="project__number">{number}</span><span className="project__mark">EB</span><div className="project__noise" /></div>
+          <div className="project__meta"><div><p>{title}</p><span>{type}</span></div><Arrow /></div>
+        </a>
+      </Reveal>)}</div>
+  </section>;
+}
 
-function About({ t }: { t: typeof copy.pt }) { return <><section className="about section-shell" id="about"><p className="eyebrow"><i />{t.aboutEyebrow}</p><div><h2 className="section-title">{t.aboutTitle}</h2><p>{t.aboutText}</p><small>{t.aboutFact}</small></div></section><section className="manifesto"><p>{t.manifesto}</p></section></>; }
+function Behance({ t }: { t: Copy }) { return <section className="behance section-shell" id="behance"><p className="eyebrow"><i />{t.behanceEyebrow}</p><Reveal><h2 className="section-title">{t.behanceTitle}</h2></Reveal><p className="section-intro">{t.behanceText}</p><div className="behance-grid">{t.cards.map((card, index) => <a key={card.number} className={`behance-card behance-card--${index === 0 ? "covers" : "visualizer"}`} href={index === 0 ? socials.covers : socials.visualizer} target="_blank" rel="noreferrer"><div className="behance-card__visual"><img src="/site-image.webp" alt="" /><span>{index === 0 ? "COVERS" : "FX"}</span></div><div className="behance-card__body"><p>{card.number} / {card.type}</p><h3>{card.title}</h3><span>{card.text}</span><strong>{card.link} <Arrow /></strong></div></a>)}</div></section>; }
 
-function Contact({ t }: { t: typeof copy.pt }) { const [sent, setSent] = useState(false); const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSent(true); }; return <section className="contact section-shell" id="contact"><p className="eyebrow"><i />{t.contactEyebrow}</p><div className="contact-grid"><div><h2 className="section-title">{t.contactTitle}</h2><p>{t.contactText}</p><a className="contact-social" href={socials.instagram} target="_blank" rel="noreferrer">{t.contactSocial} <Arrow /></a></div><form onSubmit={submit}><input required placeholder={t.form.name} aria-label={t.form.name} /><input required type="email" placeholder={t.form.email} aria-label={t.form.email} /><select required defaultValue="" aria-label={t.form.service}><option value="" disabled>{t.form.service}</option>{t.form.options.map(option => <option key={option}>{option}</option>)}</select><textarea required placeholder={t.form.message} aria-label={t.form.message} rows={4} /><button className="button button--primary" type="submit">{t.form.send} <Arrow /></button>{sent && <p className="form-message">{t.form.sent}</p>}</form></div></section>; }
+function Services({ t }: { t: Copy }) {
+  const [active, setActive] = useState(0);
+  return <section className="services section-shell" id="services">
+    <div className="services-intro"><Reveal><p className="section-kicker">{t.servicesEyebrow}</p><h2>{t.servicesTitle}</h2></Reveal><Reveal className="services-preview"><img src="/site-image.webp" alt="" loading="lazy" /><span>0{active + 1}</span></Reveal></div>
+    <div className="service-list">{t.services.map(([number,title,detail], index) =>
+      <Reveal key={number} delay={index*.05}><a href="#contact" className={active===index ? "service service--active" : "service"} onMouseEnter={()=>setActive(index)} onFocus={()=>setActive(index)}><span className="service__number">{number}</span><span className="service__title">{title}</span><span className="service__detail">{detail}</span><Arrow /></a></Reveal>)}</div>
+  </section>;
+}
 
-function Footer({ t }: { t: typeof copy.pt }) { return <footer className="footer section-shell"><span><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" /></span><p>© 2026 {t.footer}</p><div><a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a><a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={socials.covers} target="_blank" rel="noreferrer">Behance</a></div></footer>; }
+function About({ t }: { t: Copy }) { return <>
+<section className="about section-shell" id="about">
+  <div className="about-title"><Reveal><p className="section-kicker">{t.aboutEyebrow}</p><h2>{t.aboutTitle}</h2></Reveal></div>
+  <Reveal className="about-portrait"><img src="/site-image.webp" alt="" loading="lazy" /></Reveal>
+  <Reveal className="about-copy" delay={.12}><p className="about-lead">{t.aboutText}</p><p>{t.aboutFact}</p></Reveal>
+</section>
+<section className="manifesto section-shell"><Reveal><h2>{t.manifesto}</h2></Reveal></section>
+</>; }
+
+function Contact({ t }: { t: Copy }) { const [sent, setSent] = useState(false); const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSent(true); }; return <section className="contact section-shell" id="contact"><p className="eyebrow"><i />{t.contactEyebrow}</p><div className="contact-grid"><div><Reveal><h2 className="section-title">{t.contactTitle}</h2></Reveal><p>{t.contactText}</p><a className="contact-social" href={socials.instagram} target="_blank" rel="noreferrer">{t.contactSocial} <Arrow /></a></div><form onSubmit={submit}><input required placeholder={t.form.name} aria-label={t.form.name} /><input required type="email" placeholder={t.form.email} aria-label={t.form.email} /><select required defaultValue="" aria-label={t.form.service}><option value="" disabled>{t.form.service}</option>{t.form.options.map(option => <option key={option}>{option}</option>)}</select><textarea required placeholder={t.form.message} aria-label={t.form.message} rows={4} /><button className="button button--primary" type="submit">{t.form.send} <Arrow /></button>{sent && <p className="form-message">{t.form.sent}</p>}</form></div></section>; }
+
+function Footer({ t }: { t: Copy }) { return <footer className="footer section-shell"><a className="footer-brand" href="#home"><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" width="1800" height="370" /></a><div className="footer-bottom"><p>{t.heroRole}</p><div><a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a><a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={socials.covers} target="_blank" rel="noreferrer">Behance</a></div><p>© 2026 {t.footer}</p></div></footer>; }
 
 function CustomCursor() { const reduced = useReducedMotion(); const x = useMotionValue(-100); const y = useMotionValue(-100); const sx = useSpring(x, { stiffness: 400, damping: 28 }); const sy = useSpring(y, { stiffness: 400, damping: 28 }); useEffect(() => { if (reduced) return; const move = (event: PointerEvent) => { x.set(event.clientX); y.set(event.clientY); }; window.addEventListener("pointermove", move); return () => window.removeEventListener("pointermove", move); }, [reduced, x, y]); if (reduced) return null; return <motion.div className="cursor" style={{ x: sx, y: sy }} aria-hidden="true" />; }
 
-export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><Work t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
+export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
