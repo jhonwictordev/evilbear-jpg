@@ -30,6 +30,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # local credentials and signing material
 .npmrc
@@ -48,6 +49,7 @@ secrets.json
 /.wrangler/
 /outputs/
 /work/
+/tsconfig.tsbuildinfo
 
 # Local Netlify folder
 .netlify

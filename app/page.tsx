@@ -146,10 +146,10 @@ function Navbar({ t, language, setLanguage }: { t: Copy; language: Language; set
   const go = (id: string) => { setOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
   return <header className="site-header">
     <button className="brand" onClick={() => go("home")} aria-label="EVILBEAR.JPG home"><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" /></button>
-    <nav className="desktop-nav" aria-label="Navegação principal">{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}</nav>
-    <div className="header-actions"><LanguageSwitch language={language} onChange={setLanguage} /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>
+    <nav className="desktop-nav" aria-label="Navegação principal"><a href="/beats">{language === "pt" ? "Beats" : "Beats"}</a>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}</nav>
+    <div className="header-actions"><a className="header-beats" href="/beats">BEATS</a><LanguageSwitch language={language} onChange={setLanguage} /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>
     <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? t.close : t.menu}>{open ? "×" : "☰"}</button>
-    {open && <div className="mobile-nav">{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}<LanguageSwitch language={language} onChange={setLanguage} compact /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>}
+    {open && <div className="mobile-nav"><a href="/beats">Beats</a>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}<LanguageSwitch language={language} onChange={setLanguage} compact /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>}
   </header>;
 }
 
