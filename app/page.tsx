@@ -2,6 +2,8 @@
 
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { BeatsCatalog } from "@/components/beat-store/beats-catalog";
+import { useCart } from "@/components/beat-store/cart-provider";
 
 type Language = "pt" | "en";
 type Copy = (typeof copy)[Language];
@@ -30,6 +32,10 @@ const copy = {
     selectedText: "Som e imagem feitos com intenção. Uma seleção de identidades, capas, ilustrações e mundos em movimento.",
     beatTitle: "Ouça os beats",
     beatText: "Acesse o canal do YouTube e escute os lançamentos.",
+    storeEyebrow: "02 / Beat Store",
+    storeTitle: "Sons para o seu",
+    storeAccent: "próximo projeto.",
+    storeText: "Escolha um beat, escute a prévia e encontre a licença certa para o seu lançamento.",
     instaTitle: "Instagram",
     instaText: "Contato, bastidores e novidades em @evilbear.jpg.",
     behanceEyebrow: "02 / Portfólio Behance",
@@ -76,6 +82,10 @@ const copy = {
     selectedText: "Sound and image built with intention. A selection of identities, covers, illustrations and moving worlds.",
     beatTitle: "Listen to the beats",
     beatText: "Visit the YouTube channel and hear the latest releases.",
+    storeEyebrow: "02 / Beat Store",
+    storeTitle: "Sound for your",
+    storeAccent: "next project.",
+    storeText: "Choose a beat, listen to its preview and find the right license for your release.",
     instaTitle: "Instagram",
     instaText: "Contact, behind the scenes and updates at @evilbear.jpg.",
     behanceEyebrow: "02 / Behance portfolio",
@@ -140,16 +150,22 @@ function LanguageSwitch({ language, onChange, compact = false }: { language: Lan
   </div>;
 }
 
+function CartShortcut({ language }: { language: Language }) {
+  const { count } = useCart();
+  const label = language === "pt" ? `Carrinho com ${count} ${count === 1 ? "item" : "itens"}` : `Cart with ${count} ${count === 1 ? "item" : "items"}`;
+  return <a className="header-cart" href="/cart" aria-label={label}>{language === "pt" ? "CARRINHO" : "CART"} <span aria-hidden="true">{count}</span></a>;
+}
+
 function Navbar({ t, language, setLanguage }: { t: Copy; language: Language; setLanguage: (value: Language) => void }) {
   const [open, setOpen] = useState(false);
   const ids = ["work", "services", "about", "contact"];
   const go = (id: string) => { setOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
   return <header className="site-header">
     <button className="brand" onClick={() => go("home")} aria-label="EVILBEAR.JPG home"><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" /></button>
-    <nav className="desktop-nav" aria-label="Navegação principal"><a href="/beats">{language === "pt" ? "Beats" : "Beats"}</a>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}</nav>
-    <div className="header-actions"><a className="header-beats" href="/beats">BEATS</a><LanguageSwitch language={language} onChange={setLanguage} /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>
+    <nav className="desktop-nav" aria-label="Navegação principal"><button onClick={() => go("beats")}>BEATS</button>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}</nav>
+    <div className="header-actions"><CartShortcut language={language} /><LanguageSwitch language={language} onChange={setLanguage} /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>
     <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? t.close : t.menu}>{open ? "×" : "☰"}</button>
-    {open && <div className="mobile-nav"><a href="/beats">Beats</a>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}<LanguageSwitch language={language} onChange={setLanguage} compact /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>}
+    {open && <div className="mobile-nav"><button onClick={() => go("beats")}>BEATS</button>{t.nav.map((label, i) => <button key={ids[i]} onClick={() => go(ids[i])}>{label}</button>)}<LanguageSwitch language={language} onChange={setLanguage} compact /><button className="header-cta" onClick={() => go("contact")}>{t.start} <Arrow /></button></div>}
   </header>;
 }
 
@@ -235,6 +251,16 @@ function Work({ t, language }: { t: Copy; language: Language }) {
   </section>;
 }
 
+function BeatStoreSection({ t, language }: { t: Copy; language: Language }) {
+  return <section className="home-beat-store section-shell" id="beats">
+    <div className="section-heading home-beat-store__heading">
+      <Reveal><div><p className="eyebrow"><i />{t.storeEyebrow}</p><h2>{t.storeTitle}<br /><span>{t.storeAccent}</span></h2></div></Reveal>
+      <Reveal className="section-heading__aside" delay={0.12}><p>{t.storeText}</p></Reveal>
+    </div>
+    <BeatsCatalog language={language} />
+  </section>;
+}
+
 function Behance({ t }: { t: Copy }) { return <section className="behance section-shell" id="behance"><p className="eyebrow"><i />{t.behanceEyebrow}</p><Reveal><h2 className="section-title">{t.behanceTitle}</h2></Reveal><p className="section-intro">{t.behanceText}</p><div className="behance-grid">{t.cards.map((card, index) => <a key={card.number} className={`behance-card behance-card--${index === 0 ? "covers" : "visualizer"}`} href={index === 0 ? socials.covers : socials.visualizer} target="_blank" rel="noreferrer"><div className="behance-card__visual"><img src="/site-image.webp" alt="" /><span>{index === 0 ? "COVERS" : "FX"}</span></div><div className="behance-card__body"><p>{card.number} / {card.type}</p><h3>{card.title}</h3><span>{card.text}</span><strong>{card.link} <Arrow /></strong></div></a>)}</div></section>; }
 
 function Services({ t }: { t: Copy }) {
@@ -261,4 +287,4 @@ function Footer({ t }: { t: Copy }) { return <footer className="footer section-s
 
 function CustomCursor() { const reduced = useReducedMotion(); const x = useMotionValue(-100); const y = useMotionValue(-100); const sx = useSpring(x, { stiffness: 400, damping: 28 }); const sy = useSpring(y, { stiffness: 400, damping: 28 }); useEffect(() => { if (reduced) return; const move = (event: PointerEvent) => { x.set(event.clientX); y.set(event.clientY); }; window.addEventListener("pointermove", move); return () => window.removeEventListener("pointermove", move); }, [reduced, x, y]); if (reduced) return null; return <motion.div className="cursor" style={{ x: sx, y: sy }} aria-hidden="true" />; }
 
-export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
+export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><BeatStoreSection t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }

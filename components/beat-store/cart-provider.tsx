@@ -8,10 +8,18 @@ type CartContextValue = { items: CartItem[]; add: (beat: Beat, licenseId: string
 const CartContext = createContext<CartContextValue | null>(null);
 const storageKey = "evilbear-beat-cart-v1";
 
+function readStoredCart(): CartItem[] {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is CartItem => typeof item === "object" && item !== null && typeof item.beatSlug === "string" && typeof item.licenseId === "string");
+  } catch { return []; }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
-  useEffect(() => { try { setItems(JSON.parse(localStorage.getItem(storageKey) ?? "[]")); } catch { setItems([]); } finally { setReady(true); } }, []);
+  useEffect(() => { const timer = window.setTimeout(() => { setItems(readStoredCart()); setReady(true); }); return () => window.clearTimeout(timer); }, []);
   useEffect(() => { if (ready) localStorage.setItem(storageKey, JSON.stringify(items)); }, [items, ready]);
   const value = useMemo<CartContextValue>(() => ({
     items,
