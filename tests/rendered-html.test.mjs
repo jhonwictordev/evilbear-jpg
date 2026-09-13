@@ -41,6 +41,7 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   assert.match(layout, /og\.jpg/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /Pirata\+One/);
+  assert.match(css, /\.hero-art img \{ width: 100%; height: 100%; object-fit: contain; object-position: right center;/);
   assert.doesNotMatch(css, /UnifrakturCook/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("public/site-image.webp", root));

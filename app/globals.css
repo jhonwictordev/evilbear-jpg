@@ -174,11 +174,11 @@ img { display: block; max-width: 100%; }
   z-index: -2;
   top: 0;
   right: calc(50% - 50vw);
-  width: min(76vw, 1120px);
+  width: 100vw;
   height: 100%;
   overflow: hidden;
 }
-.hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: contrast(1.08) saturate(0.92); }
+.hero-art img { width: 100%; height: 100%; object-fit: contain; object-position: right center; filter: contrast(1.08) saturate(0.92); }
 .hero-art__fade {
   position: absolute;
   inset: 0;
@@ -612,7 +612,7 @@ img { display: block; max-width: 100%; }
   .menu-button { right: 18px; }
   .hero { align-items: flex-end; min-height: 920px; padding-top: 105px; padding-bottom: 78px; }
   .hero-art { top: 58px; right: calc(50% - 50vw); width: 100vw; height: 61%; opacity: 0.82 !important; }
-  .hero-art img { object-position: 40% center; }
+  .hero-art img { object-fit: cover; object-position: 40% center; }
   .hero-art__fade {
     background:
       linear-gradient(0deg, #050505 4%, transparent 50%),
