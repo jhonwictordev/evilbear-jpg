@@ -32,6 +32,9 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   assert.match(page, /behance\.net\/gallery\/171434971\/Visualizer/);
   assert.match(page, /behance\.net\/gallery\/158804245\/Artist-cover/);
   assert.match(page, /LanguageSwitch/);
+  assert.match(page, /id="beats"/);
+  assert.match(page, /<BeatsCatalog language=\{language\} \/>/);
+  assert.match(page, /CartShortcut/);
   assert.match(page, /aria-label="Navegação principal"/);
   assert.match(page, /useReducedMotion/);
   assert.match(layout, /EVILBEAR\.JPG — Som, Visual & Identidade/);
