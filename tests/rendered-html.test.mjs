@@ -61,6 +61,8 @@ test("includes the protected Beat Store foundations", async () => {
   assert.match(catalog, /BLOCO 13/);
   assert.match(catalog, /REPLAY DA MADRUGADA/);
   assert.match(catalog, /\/audio\/previews\/bloco-13\.mp3/);
+  assert.doesNotMatch(catalog, /musicalKey:\s*null/);
+  assert.doesNotMatch(catalog, /bpm:\s*null/);
   assert.match(catalog, /WAV \+ STEMS/);
   assert.match(checkout, /\/api\/checkout/);
   assert.match(api, /MERCADO_PAGO_ACCESS_TOKEN/);
