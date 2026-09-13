@@ -44,3 +44,24 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   await access(new URL("public/og.jpg", root));
   await assert.rejects(access(new URL("app/_sites-preview/SkeletonPreview.tsx", root)));
 });
+
+test("includes the protected Beat Store foundations", async () => {
+  const [catalog, checkout, api, migration, manifest] = await Promise.all([
+    readFile(new URL("../lib/beat-catalog.ts", import.meta.url), "utf8"),
+    readFile(new URL("../components/beat-store/checkout-page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../worker/beat-store-api.ts", import.meta.url), "utf8"),
+    readFile(new URL("../drizzle/0001_beat_store.sql", import.meta.url), "utf8"),
+    readFile(new URL("../.openai/hosting.json", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(catalog, /ENEMIES/);
+  assert.match(catalog, /WAV \+ STEMS/);
+  assert.match(checkout, /\/api\/checkout/);
+  assert.match(api, /MERCADO_PAGO_ACCESS_TOKEN/);
+  assert.match(api, /validSignature/);
+  assert.match(api, /payment_status = 'approved'/);
+  assert.match(api, /download_count < dt\.max_downloads/);
+  assert.match(migration, /CREATE TABLE IF NOT EXISTS orders/);
+  assert.match(manifest, /"d1": "DB"/);
+  assert.match(manifest, /"r2": "BEAT_FILES"/);
+});
