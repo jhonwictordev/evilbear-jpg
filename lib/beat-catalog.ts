@@ -17,8 +17,8 @@ export type Beat = {
   title: string;
   description: string;
   producer: string;
-  bpm: number;
-  musicalKey: string;
+  bpm: number | null;
+  musicalKey: string | null;
   duration: number;
   genre: string;
   tags: string[];
@@ -38,18 +38,22 @@ const standardLicenses: License[] = [
 const licenseSet = () => standardLicenses.map((license) => ({ ...license, files: [...license.files], rights: [...license.rights] }));
 
 export const beats: Beat[] = [
-  { id: "beat_enemies", slug: "enemies", title: "ENEMIES", description: "Drake hard rap / trap beat com textura sombria e bateria cortante.", producer: "EVILBEAR.JPG", bpm: 156, musicalKey: "F# Minor", duration: 168, genre: "Trap", tags: ["trap", "rap", "dark", "drake"], cover: "/site-image.webp", published: true, licenses: licenseSet() },
-  { id: "beat_no_signal", slug: "no-signal", title: "NO SIGNAL", description: "Dark trap espacial, feito para barras densas e refrão memorável.", producer: "EVILBEAR.JPG", bpm: 142, musicalKey: "C Minor", duration: 194, genre: "Dark Trap", tags: ["trap", "dark", "space", "melodic"], cover: "/mascot.png", published: true, licenses: licenseSet() },
-  { id: "beat_nightmare", slug: "nightmare", title: "NIGHTMARE", description: "Trap cinematográfico com tensão, graves pesados e atmosfera noturna.", producer: "EVILBEAR.JPG", bpm: 138, musicalKey: "D# Minor", duration: 176, genre: "Trap", tags: ["trap", "cinematic", "dark", "night"], cover: "/site-image.webp", published: true, licenses: licenseSet() },
-  { id: "beat_red_room", slug: "red-room", title: "RED ROOM", description: "R&B alternativo com baixo quente e espaço para voz íntima.", producer: "EVILBEAR.JPG", bpm: 96, musicalKey: "A Minor", duration: 205, genre: "R&B", tags: ["r&b", "soul", "late-night", "smooth"], cover: "/mascot.png", published: true, licenses: licenseSet() },
-  { id: "beat_still_ghost", slug: "still-ghost", title: "STILL GHOST", description: "Drill fria e precisa, com espaço para flows agressivos.", producer: "EVILBEAR.JPG", bpm: 146, musicalKey: "G Minor", duration: 158, genre: "Drill", tags: ["drill", "uk", "dark", "rap"], cover: "/site-image.webp", published: true, licenses: licenseSet() },
-  { id: "beat_lost_tape", slug: "lost-tape", title: "LOST TAPE", description: "Boom bap empoeirado com bateria crua e recortes de fita.", producer: "EVILBEAR.JPG", bpm: 88, musicalKey: "E Minor", duration: 191, genre: "Boom Bap", tags: ["boom bap", "lofi", "vinyl", "hip hop"], cover: "/mascot.png", published: true, licenses: licenseSet() },
+  { id: "beat_bloco_13", slug: "bloco-13", title: "BLOCO 13", description: "Drill de pressão, com bateria intensa e espaço para flows cortantes.", producer: "EVILBEAR.JPG", bpm: 144, musicalKey: null, duration: 180, genre: "Drill", tags: ["drill", "dark", "rap", "pressure"], cover: "/images/beats/bloco-13.jpg", previewUrl: "/audio/previews/bloco-13.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_corte_seco", slug: "corte-seco", title: "CORTE SECO", description: "Boom bap cru e direto, feito para barras com presença.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 160, genre: "Boom Bap", tags: ["boom bap", "raw", "rap", "classic"], cover: "/images/beats/corte-seco.jpg", previewUrl: "/audio/previews/corte-seco.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_eco_do_abismo", slug: "eco-do-abismo", title: "ECO DO ABISMO", description: "Boom bap sombrio, com textura profunda e atmosfera densa.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 155, genre: "Boom Bap", tags: ["boom bap", "dark", "texture", "underground"], cover: "/images/beats/eco-do-abismo.jpg", previewUrl: "/audio/previews/eco-do-abismo.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_fita_vermelha", slug: "fita-vermelha", title: "FITA VERMELHA", description: "Boom bap de fita, com recortes quentes e bateria marcante.", producer: "EVILBEAR.JPG", bpm: 89, musicalKey: null, duration: 179, genre: "Boom Bap", tags: ["boom bap", "tape", "vinyl", "rap"], cover: "/images/beats/fita-vermelha.jpg", previewUrl: "/audio/previews/fita-vermelha.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_flash_vermelho", slug: "flash-vermelho", title: "FLASH VERMELHO", description: "Boom bap de impacto, com energia rápida e cortes secos.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 157, genre: "Boom Bap", tags: ["boom bap", "red", "impact", "rap"], cover: "/images/beats/flash-vermelho.jpg", previewUrl: "/audio/previews/flash-vermelho.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_midnight_estate", slug: "midnight-estate", title: "MIDNIGHT ESTATE", description: "Boom bap noturno, elegante e cheio de espaço para voz.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 251, genre: "Boom Bap", tags: ["boom bap", "night", "cinematic", "smooth"], cover: "/images/beats/midnight-estate.jpg", previewUrl: "/audio/previews/midnight-estate.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_neon_funeral", slug: "neon-funeral", title: "NEON FUNERAL", description: "Dark trap acelerado, com tensão, ruído e energia de madrugada.", producer: "EVILBEAR.JPG", bpm: 172, musicalKey: null, duration: 146, genre: "Dark Trap", tags: ["dark trap", "neon", "aggressive", "night"], cover: "/images/beats/neon-funeral.jpg", previewUrl: "/audio/previews/neon-funeral.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_profit_mode", slug: "profit-mode", title: "PROFIT MODE", description: "Drill focada, com presença fria e graves para barras ambiciosas.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 139, genre: "Drill", tags: ["drill", "dark", "money", "rap"], cover: "/images/beats/profit-mode.jpg", previewUrl: "/audio/previews/profit-mode.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_purple_static", slug: "purple-static", title: "PURPLE STATIC", description: "Pluggnb etéreo, com brilho digital e melodia para vozes leves.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 160, genre: "Pluggnb", tags: ["pluggnb", "purple", "melodic", "digital"], cover: "/images/beats/purple-static.jpg", previewUrl: "/audio/previews/purple-static.mp3", published: true, licenses: licenseSet() },
+  { id: "beat_replay_da_madrugada", slug: "replay-da-madrugada", title: "REPLAY DA MADRUGADA", description: "Boom bap de madrugada, feito para repetir e escrever sem pressa.", producer: "EVILBEAR.JPG", bpm: null, musicalKey: null, duration: 145, genre: "Boom Bap", tags: ["boom bap", "late night", "replay", "rap"], cover: "/images/beats/replay-da-madrugada.jpg", previewUrl: "/audio/previews/replay-da-madrugada.mp3", published: true, licenses: licenseSet() },
 ];
 
-export const beatGenres = ["Todos", "Trap", "Drill", "Pluggnb", "R&B", "Hip Hop", "Boom Bap"] as const;
+export const beatGenres = ["Todos", "Trap", "Drill", "Pluggnb", "Boom Bap"] as const;
 
 export function findBeat(slug: string) { return beats.find((beat) => beat.slug === slug && beat.published); }
 export function formatDuration(seconds: number) { return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`; }
 export function formatPrice(cents: number) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100); }
 export function getLicense(beat: Beat, licenseId: string) { return beat.licenses.find((license) => license.id === licenseId && license.available); }
-export function relatedBeats(beat: Beat) { return beats.filter((candidate) => candidate.id !== beat.id && (candidate.genre === beat.genre || candidate.tags.some((tag) => beat.tags.includes(tag)) || Math.abs(candidate.bpm - beat.bpm) <= 10)).slice(0, 4); }
+export function relatedBeats(beat: Beat) { return beats.filter((candidate) => candidate.id !== beat.id && (candidate.genre === beat.genre || candidate.tags.some((tag) => beat.tags.includes(tag)) || (candidate.bpm !== null && beat.bpm !== null && Math.abs(candidate.bpm - beat.bpm) <= 10))).slice(0, 4); }

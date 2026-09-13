@@ -12,7 +12,7 @@ function readStoredCart(): CartItem[] {
   try {
     const parsed: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((item): item is CartItem => typeof item === "object" && item !== null && typeof item.beatSlug === "string" && typeof item.licenseId === "string");
+    return parsed.filter((item): item is CartItem => typeof item === "object" && item !== null && typeof item.beatSlug === "string" && typeof item.licenseId === "string" && beats.some((beat) => beat.slug === item.beatSlug && getLicense(beat, item.licenseId)));
   } catch { return []; }
 }
 
