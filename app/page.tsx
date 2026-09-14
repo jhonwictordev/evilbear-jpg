@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { BeatsCatalog } from "@/components/beat-store/beats-catalog";
 import { useCart } from "@/components/beat-store/cart-provider";
@@ -216,8 +216,8 @@ function Hero({ t }: { t: Copy }) {
             <p className="hero-tagline">{t.heroText}</p>
           </div>
           <div className="hero-actions">
-            <a className="button button--primary" href="#work" data-cursor="link">{t.work} <Arrow down /></a>
-            <a className="button button--ghost" href="#contact" data-cursor="link">{t.start} <Arrow /></a>
+            <a className="button button--primary" href="#work">{t.work} <Arrow down /></a>
+            <a className="button button--ghost" href="#contact">{t.start} <Arrow /></a>
           </div>
         </motion.div>
       </div>
@@ -236,14 +236,14 @@ function Work({ t, language }: { t: Copy; language: Language }) {
       <Reveal className="section-heading__aside" delay={0.1}>
         <p>{t.selectedText}</p>
         <div className="work-links">
-          <a className="work-link work-link--youtube" href={socials.youtube} target="_blank" rel="noopener noreferrer" data-cursor="link"><span className="work-link__icon" aria-hidden="true">▶</span><span className="work-link__copy"><small>{t.beatTitle}</small><strong>YouTube</strong></span><Arrow /></a>
-          <a className="work-link work-link--instagram" href={socials.instagram} target="_blank" rel="noopener noreferrer" data-cursor="link"><span className="work-link__icon" aria-hidden="true">IG</span><span className="work-link__copy"><small>{t.nav[3]}</small><strong>Instagram</strong></span><Arrow /></a>
+          <a className="work-link work-link--youtube" href={socials.youtube} target="_blank" rel="noopener noreferrer"><span className="work-link__icon" aria-hidden="true">▶</span><span className="work-link__copy"><small>{t.beatTitle}</small><strong>YouTube</strong></span><Arrow /></a>
+          <a className="work-link work-link--instagram" href={socials.instagram} target="_blank" rel="noopener noreferrer"><span className="work-link__icon" aria-hidden="true">IG</span><span className="work-link__copy"><small>{t.nav[3]}</small><strong>Instagram</strong></span><Arrow /></a>
         </div>
       </Reveal>
     </div>
     <div className="project-grid">{projectLabels[language].map(([number, title, type], index) =>
       <Reveal key={number} className={"project " + shapes[index]} delay={index * .06}>
-        <a href={index === 3 ? socials.youtube : index === 2 ? socials.visualizer : socials.covers} target="_blank" rel="noopener noreferrer" data-cursor="view">
+        <a href={index === 3 ? socials.youtube : index === 2 ? socials.visualizer : socials.covers} target="_blank" rel="noopener noreferrer">
           <div className="project__visual"><img src="/site-image.webp" alt="" loading="lazy" /><span className="project__number">{number}</span><span className="project__mark">EB</span><div className="project__noise" /></div>
           <div className="project__meta"><div><p>{title}</p><span>{type}</span></div><Arrow /></div>
         </a>
@@ -285,6 +285,4 @@ function Contact({ t }: { t: Copy }) { const [sent, setSent] = useState(false); 
 
 function Footer({ t }: { t: Copy }) { return <footer className="footer section-shell"><a className="footer-brand" href="#home"><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" width="1800" height="370" /></a><div className="footer-bottom"><p>{t.heroRole}</p><div><a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a><a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={socials.covers} target="_blank" rel="noreferrer">Behance</a></div><p>© 2026 {t.footer}</p></div></footer>; }
 
-function CustomCursor() { const reduced = useReducedMotion(); const x = useMotionValue(-100); const y = useMotionValue(-100); const sx = useSpring(x, { stiffness: 400, damping: 28 }); const sy = useSpring(y, { stiffness: 400, damping: 28 }); useEffect(() => { if (reduced) return; const move = (event: PointerEvent) => { x.set(event.clientX); y.set(event.clientY); }; window.addEventListener("pointermove", move); return () => window.removeEventListener("pointermove", move); }, [reduced, x, y]); if (reduced) return null; return <motion.div className="cursor" style={{ x: sx, y: sy }} aria-hidden="true" />; }
-
-export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><CustomCursor /><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><BeatStoreSection t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
+export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><BeatStoreSection t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
