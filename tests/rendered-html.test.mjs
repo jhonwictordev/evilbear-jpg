@@ -24,7 +24,7 @@ test("keeps the finished portfolio metadata and accessibility features", async (
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /CustomCursor/);
+  assert.doesNotMatch(page, /CustomCursor/);
   assert.match(page, /site-image\.webp/);
   assert.match(page, /youtube\.com\/@EVILBEARJPG/);
   assert.match(page, /instagram\.com\/evilbear\.jpg/);
@@ -41,6 +41,7 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   assert.match(layout, /og\.jpg/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /Pirata\+One/);
+  assert.doesNotMatch(css, /cursor:\s*none/);
   assert.match(css, /\.hero-art img \{ width: 100%; height: 100%; object-fit: contain; object-position: right center;/);
   assert.doesNotMatch(css, /UnifrakturCook/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
