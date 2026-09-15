@@ -37,6 +37,10 @@ test("keeps the finished portfolio metadata and accessibility features", async (
   assert.match(page, /CartShortcut/);
   assert.match(page, /aria-label="Navegação principal"/);
   assert.match(page, /useReducedMotion/);
+  assert.match(await readFile(new URL("../netlify/functions/checkout.mjs", import.meta.url), "utf8"), /MERCADO_PAGO_ACCESS_TOKEN/);
+  assert.match(await readFile(new URL("../netlify/functions/mercadopago-webhook.mjs", import.meta.url), "utf8"), /MERCADO_PAGO_WEBHOOK_SECRET/);
+  assert.match(await readFile(new URL("../netlify/functions/mercadopago-webhook.mjs", import.meta.url), "utf8"), /hasValidWebhookSignature/);
+  assert.match(await readFile(new URL("../netlify/functions/order-status.mjs", import.meta.url), "utf8"), /path: "\/api\/orders\/:order"/);
   assert.match(layout, /EVILBEAR\.JPG — Som, Visual & Identidade/);
   assert.match(layout, /og\.jpg/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
