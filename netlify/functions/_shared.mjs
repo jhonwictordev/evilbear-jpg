@@ -1,7 +1,7 @@
 import { getStore } from "@netlify/blobs";
 import { beats, getLicense } from "../../lib/beat-catalog.ts";
 
-const orderStore = () => getStore("evilbear-orders", { consistency: "strong" });
+const orderStore = () => getStore("evilbear-orders");
 const orderKey = (orderNumber) => `orders/${orderNumber}`;
 
 export const json = (body, status = 200) => Response.json(body, {
