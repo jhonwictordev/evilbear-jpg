@@ -25,7 +25,10 @@ function withinRateLimit(request) {
 export default async function checkout(request) {
   if (!withinRateLimit(request)) return json({ message: "Muitas tentativas. Aguarde um minuto." }, 429);
   const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
-  if (!accessToken) return json({ message: "Checkout indisponível. A integração de pagamentos ainda não foi ativada." }, 503);
+  const webhookSecret = process.env.MERCADO_PAGO_WEBHOOK_SECRET;
+  if (!accessToken || !webhookSecret) {
+    return json({ message: "Checkout indisponível. A integração de pagamentos ainda não foi ativada." }, 503);
+  }
 
   let input;
   try {
