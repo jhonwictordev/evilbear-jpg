@@ -1,3 +1,18 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/checkout"
+  to = "/.netlify/functions/checkout"
+  status = 200
+
+[[redirects]]
+  from = "/api/webhooks/mercadopago"
+  to = "/.netlify/functions/mercadopago-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/orders/*"
+  to = "/.netlify/functions/order-status?order=:splat"
+  status = 200
