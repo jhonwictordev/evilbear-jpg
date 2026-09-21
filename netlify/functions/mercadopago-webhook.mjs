@@ -33,6 +33,15 @@ export default async function mercadoPagoWebhook(request) {
   const order = await findOrder(orderNumber);
   if (!order) return json({ received: true, matched: false });
 
+  const paidCents = Math.round(Number(payment.transaction_amount) * 100);
+  const paymentMatchesOrder = payment.currency_id === "BRL"
+    && Number.isSafeInteger(paidCents)
+    && paidCents === order.totalCents
+    && payment.metadata?.order_number === order.orderNumber;
+  if (!paymentMatchesOrder) {
+    return json({ message: "Pagamento não corresponde ao pedido." }, 409);
+  }
+
   order.status = paymentStatus(payment.status);
   order.paymentId = String(payment.id);
   order.updatedAt = new Date().toISOString();
