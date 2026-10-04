@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build && npm run export:static",
+  "outputDirectory": "work/vercel-static",
+  "rewrites": [
+    { "source": "/api/webhooks/mercadopago", "destination": "/api/webhooks/mercadopago" },
+    { "source": "/api/orders/:order", "destination": "/api/orders/:order" },
+    { "source": "/api/checkout", "destination": "/api/checkout" }
+  ]
+}
