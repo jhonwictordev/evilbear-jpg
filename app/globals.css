@@ -713,3 +713,11 @@ img { display: block; max-width: 100%; }
 .home-beat-store__heading h2 span { color: #696464; }
 .home-beat-store .beat-filters { padding-top: 0; }
 @media (max-width: 780px) { .home-beat-store { padding-top: 100px; padding-bottom: 100px; }.home-beat-store__heading h2 { font-size: clamp(2.3rem,10vw,4.6rem); }.home-beat-store__heading { margin-bottom: 35px; } }
+
+@media (max-width: 780px) {
+  .work { padding-bottom: 8px; }
+  .work .section-heading { margin-bottom: 28px; }
+  .project-grid { gap: 18px; }
+  .project__visual, .project--tall .project__visual { height: 72vw; max-height: 340px; }
+  .home-beat-store { padding-top: 18px; padding-bottom: 72px; }
+}

@@ -123,6 +123,13 @@ const projectLabels = {
   en: [["01", "Identities", "Design"], ["02", "Covers", "Artwork"], ["03", "Visualizers", "Motion"], ["04", "Sounds", "Beats"]],
 } as const;
 
+const selectedWorkImages = [
+  "/images/cards/studio-beats-street.png",
+  "/images/cards/red-pool-bear.png",
+  "/images/cards/red-car-bear-model.png",
+  "/images/cards/red-car-solo.png",
+] as const;
+
 function Arrow({ down = false }: { down?: boolean }) { return <span aria-hidden="true">{down ? "↓" : "↗"}</span>; }
 
 function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
@@ -244,7 +251,7 @@ function Work({ t, language }: { t: Copy; language: Language }) {
     <div className="project-grid">{projectLabels[language].map(([number, title, type], index) =>
       <Reveal key={number} className={"project " + shapes[index]} delay={index * .06}>
         <a href={index === 3 ? socials.youtube : index === 2 ? socials.visualizer : socials.covers} target="_blank" rel="noopener noreferrer">
-          <div className="project__visual"><img src="/site-image.webp" alt="" loading="lazy" /><span className="project__number">{number}</span><span className="project__mark">EB</span><div className="project__noise" /></div>
+          <div className="project__visual"><img src={selectedWorkImages[index]} alt="" loading="lazy" /><span className="project__number">{number}</span><span className="project__mark">EB</span><div className="project__noise" /></div>
           <div className="project__meta"><div><p>{title}</p><span>{type}</span></div><Arrow /></div>
         </a>
       </Reveal>)}</div>
@@ -285,4 +292,4 @@ function Contact({ t }: { t: Copy }) { const [sent, setSent] = useState(false); 
 
 function Footer({ t }: { t: Copy }) { return <footer className="footer section-shell"><a className="footer-brand" href="#home"><img src="/evilbear-logo.webp" alt="EVILBEAR.JPG" width="1800" height="370" /></a><div className="footer-bottom"><p>{t.heroRole}</p><div><a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a><a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={socials.covers} target="_blank" rel="noreferrer">Behance</a></div><p>© 2026 {t.footer}</p></div></footer>; }
 
-export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><BeatStoreSection t={t} language={language} /><Behance t={t} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
+export default function Home() { const [language, setLanguage] = useState<Language>("pt"); const t = copy[language]; useEffect(() => { document.documentElement.lang = language === "pt" ? "pt-BR" : "en"; }, [language]); return <main><Navbar t={t} language={language} setLanguage={setLanguage} /><Hero t={t} /><div className="marquee" aria-label={t.heroRole}><div className="marquee__track"><span>{t.heroRole} ✦ EVILBEAR.JPG ✦ </span><span aria-hidden="true">{t.heroRole} ✦ EVILBEAR.JPG ✦ </span></div></div><Work t={t} language={language} /><BeatStoreSection t={t} language={language} /><Services t={t} /><About t={t} /><Contact t={t} /><Footer t={t} /></main>; }
